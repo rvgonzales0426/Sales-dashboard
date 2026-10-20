@@ -1,0 +1,182 @@
+@use './settings';
+
+/* ---------------------------------------------------------------------------
+   Global tuning that Vuetify's defaults can't express.
+   Palette values live in plugins/vuetify.ts — never hard-code a hex here.
+   --------------------------------------------------------------------------- */
+
+html {
+  overflow-y: auto; /* Vuetify forces a scrollbar gutter; we manage our own. */
+}
+
+body {
+  font-size: 0.9375rem; /* 15px — tighter than Material's 16px default */
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'cv05' 1, 'ss01' 1; /* Inter: single-storey g, disambiguated l */
+}
+
+/* Headings: one family, distinct weights, negative tracking at display sizes. */
+h1, h2, h3, h4, h5, h6,
+.text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em !important;
+  line-height: 1.25;
+}
+
+.text-subtitle-1, .text-subtitle-2 {
+  letter-spacing: -0.01em !important;
+}
+
+/* Numerals: aligned only where numbers stack in columns. Standalone stat values
+   keep proportional figures — tabular-nums makes a display-size number look loose. */
+.tabular-nums,
+.v-data-table td,
+.v-data-table th {
+  font-variant-numeric: tabular-nums;
+}
+
+/* -------- The one motion budget -------------------------------------------- */
+
+/* Sidebar collapse. Vuetify animates width already; we retime it and kill the
+   default easing so rail <-> expanded feels like a single deliberate gesture. */
+.v-navigation-drawer {
+  transition:
+    width 180ms cubic-bezier(0.2, 0, 0, 1),
+    transform 180ms cubic-bezier(0.2, 0, 0, 1) !important;
+}
+
+/* Theme switch cross-fade. Colors only — no layout properties, so it can't jank. */
+.v-application,
+.v-application .v-navigation-drawer,
+.v-application .v-app-bar,
+.v-application .v-card,
+.v-application .v-sheet {
+  transition:
+    background-color 120ms linear,
+    border-color 120ms linear,
+    color 120ms linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v-navigation-drawer,
+  .v-application * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* -------- Elevation with meaning ------------------------------------------- */
+/* In-page surfaces are flat + hairline. Only things that genuinely float above
+   the page get a shadow, and it's the same shadow everywhere. */
+
+.v-overlay__content > .v-card,
+.v-overlay__content > .v-list,
+.v-menu > .v-overlay__content,
+.v-snackbar__wrapper {
+  box-shadow:
+    0 1px 2px rgba(9, 12, 11, 0.06),
+    0 8px 24px -6px rgba(9, 12, 11, 0.14) !important;
+}
+
+.v-theme--dark .v-overlay__content > .v-card,
+.v-theme--dark .v-overlay__content > .v-list,
+.v-theme--dark .v-menu > .v-overlay__content,
+.v-theme--dark .v-snackbar__wrapper {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.5),
+    0 8px 24px -6px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* -------- Focus ------------------------------------------------------------- */
+
+*:focus-visible {
+  outline: 2px solid rgb(var(--v-theme-primary));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* -------- Scrollbars -------------------------------------------------------- */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--v-theme-scrollbar)) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(var(--v-theme-scrollbar));
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* -------- Small shared primitives ------------------------------------------ */
+
+/* A hairline-bordered, flat panel. The default container in this template —
+   reach for a raised card only when something actually floats. */
+.surface-panel {
+  background-color: rgb(var(--v-theme-surface));
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+  border-radius: 10px;
+}
+
+.link-inline {
+  color: rgb(var(--v-theme-primary));
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.link-inline:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* -------- Radius scale ------------------------------------------------------ */
+/* 6px  (Vuetify's $border-radius-root) — inputs, buttons, chips, list items
+   10px (.rounded-panel)               — cards, panels, tables
+   14px (.rounded-overlay)             — dialogs, menus, snackbar
+   Applied via component defaults so it stays consistent without per-call props. */
+
+.rounded-panel {
+  border-radius: 10px !important;
+}
+
+.rounded-overlay {
+  border-radius: 14px !important;
+}
+
+/* -------- Buttons ----------------------------------------------------------- */
+/* Material's ALL-CAPS, wide-tracked button label is the single loudest "this is
+   a Vuetify demo" tell. Sentence case, medium weight, normal tracking. */
+
+.btn-tuned {
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-weight: 500 !important;
+  padding-inline: 14px !important;
+}
+
+/* -------- Tables ------------------------------------------------------------ */
+
+.v-data-table th {
+  font-weight: 500 !important;
+  font-size: 0.8125rem !important;
+  color: rgb(var(--v-theme-text-secondary)) !important;
+  background-color: rgb(var(--v-theme-surface-alt)) !important;
+  white-space: nowrap;
+}
+
+.v-data-table .v-data-table__td,
+.v-data-table .v-data-table__th {
+  border-bottom: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)) !important;
+}

@@ -1,0 +1,11 @@
+// Vuetify SASS entry point. Keep this file small — anything that can be a CSS
+// custom property or a component default belongs in `plugins/vuetify.ts` instead,
+// so it stays themeable at runtime.
+//
+// $border-radius-root drives the *small* step of our radius scale (inputs,
+// buttons, chips). The medium (panels, 10px) and large (dialogs/menus, 14px)
+// steps are utility classes in main.scss, applied through component defaults.
+@use 'vuetify/settings' with (
+  $body-font-family: (Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif),
+  $border-radius-root: 6px
+);
