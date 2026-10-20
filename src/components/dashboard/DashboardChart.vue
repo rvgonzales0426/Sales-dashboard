@@ -205,22 +205,11 @@ const last = computed(() => (props.points.length ? props.points[props.points.len
   flex: 1;
   border-radius: 4px 4px 0 0;
   background-color: rgb(var(--v-theme-surface-variant));
-  animation: chart-pulse 1.4s ease-in-out infinite;
 }
 
-@keyframes chart-pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.45;
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .chart__loading-bar {
-    animation: none;
   }
 }
 </style>

@@ -86,7 +86,6 @@ defineProps<{ entries: ActivityEntry[]; loading?: boolean }>()
   height: 10px;
   border-radius: 999px;
   background-color: rgb(var(--v-theme-surface-variant));
-  animation: activity-pulse 1.4s ease-in-out infinite;
 }
 
 .activity__skeleton--dim {
@@ -94,19 +93,9 @@ defineProps<{ entries: ActivityEntry[]; loading?: boolean }>()
   margin-top: 8px;
 }
 
-@keyframes activity-pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.45;
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .activity__skeleton {
-    animation: none;
   }
 }
 </style>

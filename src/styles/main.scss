@@ -6,7 +6,9 @@
    --------------------------------------------------------------------------- */
 
 :root {
-  --font-label: inherit; /* replaced by the instrument face in the design tokens */
+  /* The instrument face, and its semi-condensed cut for micro-labels. */
+  --font-face: 'Barlow', 'Segoe UI', system-ui, sans-serif;
+  --font-label: 'Barlow Semi Condensed', 'Barlow', 'Segoe UI', system-ui, sans-serif;
 }
 
 html {
@@ -14,32 +16,50 @@ html {
 }
 
 body {
+  font-family: var(--font-face);
   font-size: 0.9375rem; /* 15px — tighter than Material's 16px default */
-  line-height: 1.55;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: 'cv05' 1, 'ss01' 1; /* Inter: single-storey g, disambiguated l */
+  /* Instrument rule: numbers that can sit above one another line up. */
+  font-variant-numeric: tabular-nums;
 }
 
-/* Headings: one family, distinct weights, negative tracking at display sizes. */
+.v-application {
+  font-family: var(--font-face) !important;
+}
+
+/* Headings: one family, distinct weights. Barlow is already tight; no extra tracking. */
 h1, h2, h3, h4, h5, h6,
 .text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6 {
   font-weight: 600;
-  letter-spacing: -0.02em !important;
-  line-height: 1.25;
+  letter-spacing: 0 !important;
+  line-height: 1.2;
+}
+
+/* Uppercase micro-labels: small, tracked, quiet. Labels recede; numerals lead. */
+.micro-label {
+  font-family: var(--font-label);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(var(--v-theme-ink-2));
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 .text-subtitle-1, .text-subtitle-2 {
   letter-spacing: -0.01em !important;
 }
 
-/* Numerals: aligned only where numbers stack in columns. Standalone stat values
-   keep proportional figures — tabular-nums makes a display-size number look loose. */
-.tabular-nums,
-.v-data-table td,
-.v-data-table th {
-  font-variant-numeric: tabular-nums;
-}
 
 /* -------- The one motion budget -------------------------------------------- */
 
@@ -131,7 +151,7 @@ h1, h2, h3, h4, h5, h6,
 .surface-panel {
   background-color: rgb(var(--v-theme-surface));
   border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
-  border-radius: 10px;
+  border-radius: 6px;
 }
 
 .link-inline {
@@ -146,17 +166,18 @@ h1, h2, h3, h4, h5, h6,
 }
 
 /* -------- Radius scale ------------------------------------------------------ */
-/* 6px  (Vuetify's $border-radius-root) — inputs, buttons, chips, list items
-   10px (.rounded-panel)               — cards, panels, tables
-   14px (.rounded-overlay)             — dialogs, menus, snackbar
-   Applied via component defaults so it stays consistent without per-call props. */
+/* Engineered, not bubbly. Corners carry hierarchy, they are not decoration.
+   4px  (Vuetify's $border-radius-root) — inputs, buttons, chips, list items
+   6px  (.rounded-panel)                — panels, tables
+   8px  (.rounded-overlay)              — dialogs, menus, snackbar
+   The instrument cluster's bezel is the one larger radius (ClusterBezel.vue). */
 
 .rounded-panel {
-  border-radius: 10px !important;
+  border-radius: 6px !important;
 }
 
 .rounded-overlay {
-  border-radius: 14px !important;
+  border-radius: 8px !important;
 }
 
 /* -------- Buttons ----------------------------------------------------------- */

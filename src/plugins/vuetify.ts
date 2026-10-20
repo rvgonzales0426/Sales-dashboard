@@ -1,113 +1,87 @@
 import 'vuetify/styles'
 import '@mdi/font/css/materialdesignicons.css'
+import '@/styles/fonts.css'
 import '@/styles/main.scss'
 
 import { createVuetify, type ThemeDefinition } from 'vuetify'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
+import { day, night, type ModeTokens } from '@/styles/tokens'
 
 /* ---------------------------------------------------------------------------
- * PALETTE
+ * PALETTE — built from src/styles/tokens.ts, the one place colours live.
  *
- * Light = "Paper": warm off-white page plane, white surfaces, deep pine accent.
- * Dark  = "Graphite": near-black plane, raised surfaces, mint accent.
- *
- * The dark theme is designed, not inverted - the accent is a different step of
- * the hue (deep pine is unreadable on black), and surfaces get *lighter* as
- * they rise, the opposite of the light theme's behaviour.
- *
- * Chart series colours were validated for colour-vision-deficiency separation
- * and surface contrast. If you re-hue them, re-validate them.
+ * Vuetify's 'light' and 'dark' themes are the cluster's Day and Night modes.
+ * Status colours (good / caution / critical) are reserved for status: tell-
+ * tales, pace pills, the fuel gauge, issue flags. The *-ink steps are for
+ * status-coloured TEXT, which needs 4.5:1 where a mark needs only 3:1.
  * ------------------------------------------------------------------------- */
 
-const light: ThemeDefinition = {
-  dark: false,
-  colors: {
-    background: '#F5F5F1',
-    surface: '#FFFFFF',
-    'surface-alt': '#FAFAF8',
-    'surface-variant': '#EFEFE9',
-    'on-surface-variant': '#5E6763',
-    primary: '#0F5C4C',
-    'primary-soft': '#E4EFEB',
-    secondary: '#5E6763',
-    'text-secondary': '#5E6763',
-    scrollbar: '#D6D6CD',
-    'line-strong': '#C9C9BF',
-    good: '#1B7F4E',
-    caution: '#B5731F',
-    'caution-ink': '#8A5414',
-    critical: '#B23A32',
-    success: '#1B7F4E',
-    warning: '#B5731F',
-    error: '#B23A32',
-    info: '#2E6FA8',
-    'on-background': '#161A18',
-    'on-surface': '#161A18',
-    'on-primary': '#FFFFFF',
-  },
-  variables: {
-    'border-color': '#E3E3DC',
-    'border-opacity': 1,
-    'high-emphasis-opacity': 1,
-    'medium-emphasis-opacity': 1,
-    'hover-opacity': 0.04,
-    'focus-opacity': 0.06,
-    'selected-opacity': 0.06,
-    'activated-opacity': 0.06,
-    'disabled-opacity': 0.38,
-    'chart-1': '#12876F',
-    'chart-2': '#C97A14',
-    'chart-3': '#2E6FA8',
-    'chart-4': '#C24455',
-    'chart-grid': '#E7E7E0',
-    'chart-axis': '#C9C9BF',
-  },
+function themeFrom(t: ModeTokens, dark: boolean): ThemeDefinition {
+  return {
+    dark,
+    colors: {
+      background: t.surface,
+      surface: t.raised,
+      'surface-alt': t.raisedAlt,
+      'surface-variant': t.raisedAlt,
+      'on-surface-variant': t.ink2,
+      'dial-face': t.dialFace,
+      line: t.line,
+      'line-strong': t.lineStrong,
+      track: t.track,
+      ink: t.ink,
+      'ink-2': t.ink2,
+      'ink-3': t.ink3,
+      primary: t.accent,
+      'primary-soft': t.raisedAlt,
+      accent: t.accent,
+      'on-accent': t.onAccent,
+      secondary: t.ink2,
+      'text-secondary': t.ink2,
+      scrollbar: t.lineStrong,
+      good: t.good,
+      caution: t.caution,
+      critical: t.critical,
+      'good-ink': t.goodInk,
+      'caution-ink': t.cautionInk,
+      'critical-ink': t.criticalInk,
+      // Vuetify's own status names map onto the text-safe steps, so alerts
+      // and form errors stay readable.
+      success: t.goodInk,
+      warning: t.cautionInk,
+      error: t.criticalInk,
+      info: t.ink2,
+      'area-north': t.areas.north,
+      'area-south': t.areas.south,
+      'area-caraga': t.areas.caraga,
+      'on-background': t.ink,
+      'on-surface': t.ink,
+      'on-primary': t.onAccent,
+    },
+    variables: {
+      'border-color': hexTriplet(t.line),
+      'border-opacity': 1,
+      'high-emphasis-opacity': 1,
+      'medium-emphasis-opacity': 1,
+      'hover-opacity': dark ? 0.06 : 0.04,
+      'focus-opacity': dark ? 0.09 : 0.06,
+      'selected-opacity': dark ? 0.09 : 0.06,
+      'activated-opacity': dark ? 0.09 : 0.06,
+      'disabled-opacity': 0.38,
+      'chart-grid': hexTriplet(t.line),
+      'chart-axis': hexTriplet(t.lineStrong),
+    },
+  }
 }
 
-const dark: ThemeDefinition = {
-  dark: true,
-  colors: {
-    background: '#0D0F0E',
-    surface: '#161917',
-    'surface-alt': '#1C201E',
-    'surface-variant': '#232825',
-    'on-surface-variant': '#949D98',
-    primary: '#4CC49E',
-    'primary-soft': '#16302A',
-    secondary: '#949D98',
-    'text-secondary': '#949D98',
-    scrollbar: '#2E3431',
-    'line-strong': '#3A413D',
-    good: '#3FB574',
-    caution: '#D9A03C',
-    'caution-ink': '#D9A03C',
-    critical: '#E0685E',
-    success: '#3FB574',
-    warning: '#D9A03C',
-    error: '#E0685E',
-    info: '#5C9BD6',
-    'on-background': '#E8EBE8',
-    'on-surface': '#E8EBE8',
-    'on-primary': '#08130F',
-  },
-  variables: {
-    'border-color': '#262B28',
-    'border-opacity': 1,
-    'high-emphasis-opacity': 1,
-    'medium-emphasis-opacity': 1,
-    'hover-opacity': 0.06,
-    'focus-opacity': 0.09,
-    'selected-opacity': 0.09,
-    'activated-opacity': 0.09,
-    'disabled-opacity': 0.38,
-    'chart-1': '#199E7E',
-    'chart-2': '#B8811F',
-    'chart-3': '#3D82C9',
-    'chart-4': '#CB5462',
-    'chart-grid': '#222724',
-    'chart-axis': '#333A36',
-  },
+/** Vuetify reads border-color as an "r,g,b" triplet. */
+function hexTriplet(hex: string): string {
+  const n = parseInt(hex.slice(1), 16)
+  return `${(n >> 16) & 255},${(n >> 8) & 255},${n & 255}`
 }
+
+const light = themeFrom(day, false)
+const dark = themeFrom(night, true)
 
 /* ---------------------------------------------------------------------------
  * COMPONENT DEFAULTS

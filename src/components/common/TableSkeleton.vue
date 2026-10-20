@@ -2,6 +2,7 @@
 /**
  * Loading placeholder shaped like the table it replaces. Skeletons over
  * spinners: the page keeps its layout, so nothing jumps when data lands.
+ * Static on purpose: motion is reserved for values that change.
  */
 withDefaults(defineProps<{ rows?: number; columns?: number }>(), { rows: 5, columns: 4 })
 </script>
@@ -40,29 +41,11 @@ withDefaults(defineProps<{ rows?: number; columns?: number }>(), { rows: 5, colu
 .skeleton__cell {
   height: 10px;
   border-radius: 999px;
-  background-color: rgb(var(--v-theme-surface-variant));
-  animation: skeleton-pulse 1.4s ease-in-out infinite;
+  background-color: rgb(var(--v-theme-track));
 }
 
-.skeleton__row:nth-child(even) .skeleton__cell {
-  animation-delay: 0.12s;
-}
 
-@keyframes skeleton-pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.45;
-  }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .skeleton__cell {
-    animation: none;
-  }
-}
 
 .sr-only {
   position: absolute;

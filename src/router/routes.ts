@@ -97,6 +97,13 @@ export const routes: RouteRecordRaw[] = [
     ],
   },
   {
+    // Design review: every instrument state in Day and Night, no data needed.
+    path: '/dev/instruments',
+    name: 'dev-instruments',
+    component: () => import('@/pages/dev/InstrumentsGalleryView.vue'),
+    meta: { title: 'Instruments' },
+  },
+  {
     path: '/403',
     name: 'forbidden',
     component: () => import('@/pages/error/ForbiddenView.vue'),

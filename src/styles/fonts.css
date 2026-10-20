@@ -1,0 +1,69 @@
+/*
+ * Barlow — a DIN-style face, the cluster's instrument lettering — and Barlow
+ * Semi Condensed for micro-labels. Self-hosted through @fontsource: no request
+ * leaves for Google at runtime.
+ */
+@import '@fontsource/barlow/latin-400.css';
+@import '@fontsource/barlow/latin-500.css';
+@import '@fontsource/barlow/latin-600.css';
+@import '@fontsource/barlow/latin-700.css';
+@import '@fontsource/barlow/latin-ext-400.css';
+@import '@fontsource/barlow/latin-ext-500.css';
+@import '@fontsource/barlow/latin-ext-600.css';
+@import '@fontsource/barlow/latin-ext-700.css';
+@import '@fontsource/barlow-semi-condensed/latin-500.css';
+@import '@fontsource/barlow-semi-condensed/latin-600.css';
+
+/*
+ * Barlow has no peso sign. These one-glyph faces carry a ₱ built from Barlow's
+ * own P (scripts/build-peso-glyph.py), so currency matches the numerals instead
+ * of falling back to a system font mid-number.
+ */
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/barlow-peso-400.woff') format('woff');
+  unicode-range: U+20B1;
+}
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/fonts/barlow-peso-500.woff') format('woff');
+  unicode-range: U+20B1;
+}
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../assets/fonts/barlow-peso-600.woff') format('woff');
+  unicode-range: U+20B1;
+}
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/barlow-peso-700.woff') format('woff');
+  unicode-range: U+20B1;
+}
+@font-face {
+  font-family: 'Barlow Semi Condensed';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/fonts/barlow-semi-condensed-peso-500.woff') format('woff');
+  unicode-range: U+20B1;
+}
+@font-face {
+  font-family: 'Barlow Semi Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../assets/fonts/barlow-semi-condensed-peso-600.woff') format('woff');
+  unicode-range: U+20B1;
+}
