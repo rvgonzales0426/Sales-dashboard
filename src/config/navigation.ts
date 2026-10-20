@@ -17,6 +17,23 @@ export const navigation: NavSection[] = [
     items: [{ title: 'Dashboard', icon: 'mdi-view-dashboard-outline', to: '/' }],
   },
   {
+    title: 'Data',
+    items: [
+      {
+        title: 'Upload workbook',
+        icon: 'mdi-tray-arrow-up',
+        to: '/upload',
+        permissions: [PERMISSIONS.UploadsWrite],
+      },
+      {
+        title: 'Upload history',
+        icon: 'mdi-history',
+        to: '/upload/history',
+        permissions: [PERMISSIONS.UploadsRead, PERMISSIONS.UploadsWrite],
+      },
+    ],
+  },
+  {
     title: 'Administration',
     items: [
       {

@@ -13,4 +13,8 @@ export default defineConfig({
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
   },
   server: { port: 5173 },
+  build: {
+    // exceljs (~940 kB) is its own lazy chunk, loaded only on the Upload page.
+    chunkSizeWarningLimit: 1000,
+  },
 })

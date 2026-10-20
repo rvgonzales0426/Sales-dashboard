@@ -50,6 +50,11 @@ function emptyResult(fileName: string, fileSize: number, now: Date): ParseResult
   }
 }
 
+/** A result for a file rejected before reading it (too big, empty). */
+export function failedResult(meta: { fileName: string; fileSize: number }, fatal: Issue, now = new Date()): ParseResult {
+  return { ...emptyResult(meta.fileName, meta.fileSize, now), fatal }
+}
+
 /**
  * Several sheets can carry the same headers — the sample's DASHBOARD sheet
  * copies them over LOOKUP formulas. The source sheet is the one whose rows are

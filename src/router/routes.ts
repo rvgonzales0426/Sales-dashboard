@@ -45,6 +45,18 @@ export const routes: RouteRecordRaw[] = [
         meta: { title: 'Users', permissions: ['users.read'] },
       },
       {
+        path: 'upload',
+        name: 'upload',
+        component: () => import('@/pages/upload/UploadView.vue'),
+        meta: { title: 'Upload workbook', permissions: ['uploads.write'] },
+      },
+      {
+        path: 'upload/history',
+        name: 'upload-history',
+        component: () => import('@/pages/upload/HistoryView.vue'),
+        meta: { title: 'Upload history', permissions: ['uploads.read', 'uploads.write'] },
+      },
+      {
         path: 'admin/roles',
         name: 'admin-roles',
         component: () => import('@/pages/admin/RolesView.vue'),

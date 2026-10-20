@@ -5,6 +5,10 @@
    Palette values live in plugins/vuetify.ts — never hard-code a hex here.
    --------------------------------------------------------------------------- */
 
+:root {
+  --font-label: inherit; /* replaced by the instrument face in the design tokens */
+}
+
 html {
   overflow-y: auto; /* Vuetify forces a scrollbar gutter; we manage our own. */
 }

@@ -1,5 +1,5 @@
 export * from './types'
-export { parseWorkbook, parseGrids, type ParseOptions } from './parse'
+export { parseWorkbook, parseGrids, failedResult, type ParseOptions } from './parse'
 export { diffUpload, type UploadDiff, type DiffEntry, type DiffKind, type SnapshotPerson, type KnownPerson } from './diff'
 export { buildCommitPayload, type CommitPayload } from './payload'
 export { buildTemplate, templateFileName, type TemplatePerson } from './template'

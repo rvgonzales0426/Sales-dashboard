@@ -584,15 +584,21 @@ create policy workbooks_select
 
 -- ---------------------------------------------------------------------------
 -- Realtime: cockpits and wall displays refetch when a quarter's current
--- version changes.
+-- version changes or an admin edits a target.
 -- ---------------------------------------------------------------------------
 do $$
+declare
+  t text;
 begin
-  if exists (select 1 from pg_publication where pubname = 'supabase_realtime')
-     and not exists (
-       select 1 from pg_publication_tables
-       where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'uploads'
-     ) then
-    alter publication supabase_realtime add table public.uploads;
+  if not exists (select 1 from pg_publication where pubname = 'supabase_realtime') then
+    return;
   end if;
+  foreach t in array array['uploads', 'targets'] loop
+    if not exists (
+      select 1 from pg_publication_tables
+      where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = t
+    ) then
+      execute format('alter publication supabase_realtime add table public.%I', t);
+    end if;
+  end loop;
 end $$;
