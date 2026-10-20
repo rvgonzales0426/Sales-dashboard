@@ -118,7 +118,14 @@ const warningCount = computed(() => result.value?.issues.filter((i) => i.severit
 <style scoped>
 .flow {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 24px;
+}
+
+/* Grid children default to min-width: auto, which lets a wide table push the
+   whole page sideways. Pin them so wide content scrolls inside its own frame. */
+.flow > * {
+  min-width: 0;
 }
 
 .flow__status {

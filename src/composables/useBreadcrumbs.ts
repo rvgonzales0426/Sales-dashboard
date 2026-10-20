@@ -10,7 +10,7 @@ export function useBreadcrumbs() {
   const route = useRoute()
 
   const crumbs = computed<Crumb[]>(() => {
-    const trail: Crumb[] = [{ title: 'Home', to: '/' }]
+    const trail: Crumb[] = [{ title: 'Team cockpit', to: '/' }]
 
     for (const matched of route.matched) {
       if (!matched.meta?.title) continue
@@ -18,8 +18,8 @@ export function useBreadcrumbs() {
       trail.push({ title: matched.meta.title as string, to: matched.path })
     }
 
-    // Dashboard is Home — don't render "Home / Dashboard".
-    if (trail.length === 1) return [{ title: 'Dashboard', disabled: true }]
+    // The cockpit is home — don't render "Team cockpit / Team cockpit".
+    if (trail.length === 1) return [{ title: 'Team cockpit', disabled: true }]
 
     const last = trail[trail.length - 1]
     return [...trail.slice(0, -1), { ...last, to: undefined, disabled: true }]

@@ -19,3 +19,9 @@ tests/fixtures/private/
 test-results/
 playwright-report/
 playwright/.cache/
+
+# Scratch scripts
+scripts/.tmp/
+
+# Real workbooks dropped in for local use.
+DATA/

@@ -114,6 +114,7 @@ const uploader = (upload: Upload) => upload.uploader?.full_name || upload.upload
 <style scoped>
 .history {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 16px;
 }
 
@@ -136,6 +137,8 @@ const uploader = (upload: Upload) => upload.uploader?.full_name || upload.upload
 }
 
 .history__scroll {
+  /* Contains absolutely positioned screen-reader labels, which would otherwise widen the page. */
+  position: relative;
   overflow-x: auto;
 }
 
@@ -217,5 +220,10 @@ th {
   height: 1px;
   overflow: hidden;
   clip: rect(0 0 0 0);
+}
+
+/* Wide tables scroll inside their own frame, never the page. */
+.history > * {
+  min-width: 0;
 }
 </style>

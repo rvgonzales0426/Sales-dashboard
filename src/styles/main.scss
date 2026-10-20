@@ -15,6 +15,13 @@ html {
   overflow-y: auto; /* Vuetify forces a scrollbar gutter; we manage our own. */
 }
 
+/* The page plane under everything, so overscroll never shows a stray colour. */
+html,
+body,
+.v-application {
+  background-color: rgb(var(--v-theme-background));
+}
+
 body {
   font-family: var(--font-face);
   font-size: 0.9375rem; /* 15px — tighter than Material's 16px default */

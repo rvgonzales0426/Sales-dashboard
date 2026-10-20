@@ -123,7 +123,8 @@ defineProps<{
   font-family: var(--font-label);
   font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
   text-transform: uppercase;
   color: rgb(var(--v-theme-ink-2));
 }
@@ -134,10 +135,8 @@ defineProps<{
 
 .lamp__detail {
   font-size: 0.8125rem;
+  line-height: 1.3;
   color: rgb(var(--v-theme-ink-2));
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .is-lit.is-caution .lamp__detail {

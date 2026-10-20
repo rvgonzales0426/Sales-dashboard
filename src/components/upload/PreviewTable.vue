@@ -118,6 +118,8 @@ const cellClass = (f: ReturnType<typeof flag>) => (f ? `cell--${f.severity}` : '
 <style scoped>
 /* The page never scrolls sideways; this table may, inside its own frame. */
 .table-wrap {
+  /* Contains absolutely positioned screen-reader labels, which would otherwise widen the page. */
+  position: relative;
   overflow-x: auto;
   border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
   border-radius: 8px;

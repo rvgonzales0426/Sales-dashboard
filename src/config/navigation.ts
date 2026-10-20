@@ -14,7 +14,11 @@ export interface NavSection {
 
 export const navigation: NavSection[] = [
   {
-    items: [{ title: 'Dashboard', icon: 'mdi-view-dashboard-outline', to: '/' }],
+    items: [
+      { title: 'Team cockpit', icon: 'mdi-speedometer', to: '/' },
+      { title: 'Area comparison', icon: 'mdi-view-column-outline', to: '/areas', permissions: [PERMISSIONS.SalesRead] },
+      { title: 'Leaderboard', icon: 'mdi-format-list-numbered', to: '/leaderboard', permissions: [PERMISSIONS.SalesRead] },
+    ],
   },
   {
     title: 'Data',
@@ -31,6 +35,8 @@ export const navigation: NavSection[] = [
         to: '/upload/history',
         permissions: [PERMISSIONS.UploadsRead, PERMISSIONS.UploadsWrite],
       },
+      { title: 'Targets', icon: 'mdi-bullseye-arrow', to: '/admin/targets', permissions: [PERMISSIONS.TargetsWrite] },
+      { title: 'People', icon: 'mdi-account-group-outline', to: '/admin/people', permissions: [PERMISSIONS.PeopleWrite] },
     ],
   },
   {
@@ -48,6 +54,8 @@ export const navigation: NavSection[] = [
         to: '/admin/roles',
         permissions: [PERMISSIONS.RolesRead],
       },
+      { title: 'Audit log', icon: 'mdi-text-box-search-outline', to: '/admin/audit', permissions: [PERMISSIONS.AuditRead] },
+      { title: 'Sales settings', icon: 'mdi-tune-variant', to: '/admin/sales-settings', permissions: [PERMISSIONS.SettingsWrite] },
     ],
   },
   {

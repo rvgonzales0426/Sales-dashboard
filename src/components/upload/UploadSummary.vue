@@ -50,7 +50,7 @@ const excludedText = computed(() =>
           :max="2100"
           class="summary__year"
           data-testid="upload-year"
-          hint="The workbook doesn't say; check it."
+          hint="Not in the workbook — check it"
           persistent-hint
         />
       </dd>
@@ -150,7 +150,9 @@ dd {
 }
 
 .summary__year {
-  max-width: 120px;
+  flex: 1;
+  min-width: 120px;
+  max-width: 200px;
 }
 
 .summary__note {

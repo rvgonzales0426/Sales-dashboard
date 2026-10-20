@@ -50,6 +50,9 @@ export const useSalesStore = defineStore('sales', () => {
   const settingsRow = ref<SalesSettings | null>(null)
   const loading = ref(false)
   const revision = ref(0)
+  /** Cached snapshots that are known current; the rest are shown while they refetch. */
+  const fresh = new Set<string>()
+  let stale = false
   let channel: RealtimeChannel | null = null
   let debounce: ReturnType<typeof setTimeout> | null = null
 
@@ -94,9 +97,19 @@ export const useSalesStore = defineStore('sales', () => {
     return (data ?? []) as TargetRow[]
   }
 
+  /** A quarter already in memory, synchronously — lets a view paint before any await. */
+  function peek(year: number, quarter: Quarter): PeriodData | null {
+    return cache.value[periodKey(year, quarter)] ?? null
+  }
+
   async function loadPeriod(year: number, quarter: Quarter, options: { force?: boolean } = {}): Promise<PeriodData | null> {
     const key = periodKey(year, quarter)
-    if (!options.force && cache.value[key]) return cache.value[key]
+    // After invalidate() the cache is kept for display but no longer trusted.
+    if (stale) {
+      stale = false
+      fresh.clear()
+    }
+    if (!options.force && cache.value[key] && fresh.has(key)) return cache.value[key]
     if (!periodsLoaded.value) await fetchPeriods()
     const summary = periods.value.find((p) => p.year === year && p.quarter === quarter)
     if (!summary) return null
@@ -127,6 +140,7 @@ export const useSalesStore = defineStore('sales', () => {
         targetRows,
       }
       cache.value = { ...cache.value, [key]: data }
+      fresh.add(key)
       return data
     } finally {
       loading.value = false
@@ -142,7 +156,7 @@ export const useSalesStore = defineStore('sales', () => {
 
   /** Drop cached snapshots and tell every view to recompute. */
   async function invalidate() {
-    cache.value = {}
+    stale = true
     await Promise.all([fetchPeriods(), fetchSettings()])
     revision.value++
   }
@@ -186,10 +200,18 @@ export const useSalesStore = defineStore('sales', () => {
     return settingsRow.value
   }
 
+  /** The sales person linked to this sign-in, for agent self-view. */
+  async function myPersonId(): Promise<string | null> {
+    const { data, error } = await supabase.rpc('my_person_id')
+    if (error) throw new Error(toMessage(error))
+    return (data as string | null) ?? null
+  }
+
   function reset() {
     periods.value = []
     periodsLoaded.value = false
     cache.value = {}
+    fresh.clear()
     settingsRow.value = null
   }
 
@@ -206,11 +228,13 @@ export const useSalesStore = defineStore('sales', () => {
     fetchPeriods,
     fetchSettings,
     loadPeriod,
+    peek,
     loadAllPeriods,
     invalidate,
     subscribe,
     unsubscribe,
     updateSettings,
+    myPersonId,
     reset,
   }
 })

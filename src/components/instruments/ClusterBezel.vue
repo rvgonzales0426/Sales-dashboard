@@ -65,7 +65,7 @@ defineProps<{ label: string }>()
 .bezel__strip {
   grid-area: strip;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.25fr);
   margin: 0 -32px;
   border-top: 1px solid rgb(var(--v-theme-line));
 }

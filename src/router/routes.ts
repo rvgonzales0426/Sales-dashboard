@@ -24,10 +24,30 @@ export const routes: RouteRecordRaw[] = [
     meta: { requiresAuth: true },
     children: [
       {
+        // Landing page. Without sales access it explains how to get it.
         path: '',
         name: 'dashboard',
-        component: () => import('@/pages/dashboard/DashboardView.vue'),
-        meta: { title: 'Dashboard' },
+        component: () => import('@/pages/cockpit/TeamCockpitView.vue'),
+        meta: { title: 'Team cockpit' },
+      },
+      {
+        path: 'agents/:personId',
+        name: 'agent',
+        component: () => import('@/pages/cockpit/AgentCockpitView.vue'),
+        props: true,
+        meta: { title: 'Agent cockpit', permissions: ['sales.read', 'sales.self'] },
+      },
+      {
+        path: 'areas',
+        name: 'areas',
+        component: () => import('@/pages/areas/AreaComparisonView.vue'),
+        meta: { title: 'Area comparison', permissions: ['sales.read'] },
+      },
+      {
+        path: 'leaderboard',
+        name: 'leaderboard',
+        component: () => import('@/pages/leaderboard/LeaderboardView.vue'),
+        meta: { title: 'Leaderboard', permissions: ['sales.read'] },
       },
       {
         path: 'settings',
@@ -55,6 +75,30 @@ export const routes: RouteRecordRaw[] = [
         name: 'upload-history',
         component: () => import('@/pages/upload/HistoryView.vue'),
         meta: { title: 'Upload history', permissions: ['uploads.read', 'uploads.write'] },
+      },
+      {
+        path: 'admin/targets',
+        name: 'admin-targets',
+        component: () => import('@/pages/admin/TargetsView.vue'),
+        meta: { title: 'Targets', permissions: ['targets.write'] },
+      },
+      {
+        path: 'admin/people',
+        name: 'admin-people',
+        component: () => import('@/pages/admin/PeopleView.vue'),
+        meta: { title: 'People', permissions: ['people.write'] },
+      },
+      {
+        path: 'admin/audit',
+        name: 'admin-audit',
+        component: () => import('@/pages/admin/AuditView.vue'),
+        meta: { title: 'Audit log', permissions: ['audit.read'] },
+      },
+      {
+        path: 'admin/sales-settings',
+        name: 'admin-sales-settings',
+        component: () => import('@/pages/admin/SalesSettingsView.vue'),
+        meta: { title: 'Sales settings', permissions: ['settings.write'] },
       },
       {
         path: 'admin/roles',

@@ -27,7 +27,8 @@ const { drawer, rail, isMobile, toggleSidebar } = useAppShell()
 
 /* One content measure for every page, so pages never set their own gutters. */
 .app-container {
-  max-width: 1240px;
+  min-width: 0;
+  max-width: 1440px;
   margin-inline: auto;
   padding: 32px;
 }

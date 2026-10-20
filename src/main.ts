@@ -16,6 +16,23 @@ async function bootstrap() {
   await router.isReady()
 
   app.mount('#app')
+  warmRoutes()
+}
+
+/**
+ * Pages are code-split, so the first visit to each would wait on a download
+ * (and, in dev, a compile) and briefly show nothing. Once the first screen is
+ * up and the browser is idle, fetch every page's code so switching modules is
+ * instant. exceljs stays out of this: it loads only when a file is picked.
+ */
+function warmRoutes() {
+  const idle = window.requestIdleCallback ?? ((run: () => void) => window.setTimeout(run, 400))
+  idle(() => {
+    for (const route of router.getRoutes()) {
+      const component = route.components?.default
+      if (typeof component === 'function') (component as () => Promise<unknown>)().catch(() => undefined)
+    }
+  })
 }
 
 bootstrap()
