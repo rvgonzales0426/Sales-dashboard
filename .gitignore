@@ -11,3 +11,11 @@ dist-ssr
 .idea
 *.log
 supabase/.temp
+
+# Real workbooks with employee data never leave this machine.
+tests/fixtures/private/
+
+# Test output
+test-results/
+playwright-report/
+playwright/.cache/

@@ -34,14 +34,18 @@ export interface Profile {
   avatar_url: string | null
   role_id: string | null
   is_active: boolean
+  /** Day / Night preference, carried across devices (0003). */
+  display_mode: DisplayMode
   created_at: string
   updated_at: string
   /** Joined by `select('*, role:roles(*)')`. Absent on queries that skip it. */
   role?: Role | null
 }
 
+export type DisplayMode = 'day' | 'night' | 'system'
+
 /** Fields a user may change on their own profile. */
-export type ProfileUpdate = Partial<Pick<Profile, 'full_name' | 'avatar_url'>>
+export type ProfileUpdate = Partial<Pick<Profile, 'full_name' | 'avatar_url' | 'display_mode'>>
 
 /** Fields that need users.write, on anyone's profile. */
 export type ProfileAdminUpdate = Partial<Pick<Profile, 'role_id' | 'is_active'>>

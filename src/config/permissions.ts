@@ -21,9 +21,24 @@ export const PERMISSIONS = {
   UsersInvite: 'users.invite',
   RolesRead: 'roles.read',
   RolesWrite: 'roles.write',
+  // Sales cockpit (0004_sales_permissions.sql)
+  SalesRead: 'sales.read',
+  SalesSelf: 'sales.self',
+  UploadsWrite: 'uploads.write',
+  UploadsRead: 'uploads.read',
+  TargetsWrite: 'targets.write',
+  PeopleWrite: 'people.write',
+  AuditRead: 'audit.read',
+  SettingsWrite: 'settings.write',
 } as const
 
 export type PermissionKey = (typeof PERMISSIONS)[keyof typeof PERMISSIONS]
 
 /** Order categories appear in the role editor. Unlisted ones sort last, A-Z. */
-export const CATEGORY_ORDER = ['Users', 'Access control'] as const
+export const CATEGORY_ORDER = [
+  'Sales',
+  'Uploads',
+  'Sales administration',
+  'Users',
+  'Access control',
+] as const
