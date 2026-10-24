@@ -50,7 +50,7 @@ const excludedText = computed(() =>
           :max="2100"
           class="summary__year"
           data-testid="upload-year"
-          hint="Not in the workbook — check it"
+          hint="Not in the file — please check"
           persistent-hint
         />
       </dd>

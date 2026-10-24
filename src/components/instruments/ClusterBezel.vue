@@ -8,11 +8,24 @@
  *   tablet   speedometer across the top, then two columns
  *   phone    one column, speedometer first
  */
+import { computed } from 'vue'
+import { useThemeStore } from '@/stores/theme'
+
 defineProps<{ label: string }>()
+
+/**
+ * The instruments always read on a black face, Day or Night — the black dash
+ * in an ivory cabin. In Day ("Ivory") the housing gets a polished chrome rim
+ * and a line of contrast stitching, like the stitched leather around a
+ * grand tourer's cluster. Flat: borders and a dashed seam, no shadows.
+ */
+const theme = useThemeStore()
+const luxe = computed(() => !theme.isDark)
 </script>
 
 <template>
-  <section class="bezel" :aria-label="label">
+  <div class="housing" :class="{ 'housing--luxe': luxe }">
+  <section class="bezel v-theme--dark" :class="{ 'bezel--luxe': luxe }" :aria-label="label">
     <div class="bezel__left"><slot name="left" /></div>
     <div class="bezel__hero"><slot name="hero" /></div>
     <div class="bezel__right"><slot name="right" /></div>
@@ -22,10 +35,21 @@ defineProps<{ label: string }>()
       <div class="bezel__cell bezel__cell--lamps"><slot name="telltales" /></div>
     </div>
   </section>
+  </div>
 </template>
 
 <style scoped>
+/* Ivory mode: a polished chrome rim — a light band between two dark hairlines. */
+.housing--luxe {
+  padding: 3px;
+  border: 1px solid rgb(var(--v-theme-chrome-deep));
+  border-radius: 20px;
+  background-color: rgb(var(--v-theme-chrome));
+}
+
 .bezel {
+  position: relative;
+  color: rgb(var(--v-theme-on-surface));
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) minmax(0, 1fr);
   grid-template-areas:
@@ -36,6 +60,22 @@ defineProps<{ label: string }>()
   border: 1px solid rgb(var(--v-theme-line-strong));
   border-radius: 16px;
   background-color: rgb(var(--v-theme-surface));
+}
+
+.bezel--luxe {
+  border-color: rgb(var(--v-theme-chrome-deep));
+  background-color: rgb(var(--v-theme-dial-face));
+}
+
+/* Contrast stitching: an ivory seam just inside the housing's edge. */
+.bezel--luxe::before {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px dashed rgb(var(--v-theme-stitch));
+  border-radius: 11px;
+  opacity: 0.45;
+  pointer-events: none;
 }
 
 .bezel__left {
@@ -130,6 +170,10 @@ defineProps<{ label: string }>()
     padding: 16px 16px 0;
     gap: 16px;
     border-radius: 12px;
+  }
+
+  .housing--luxe {
+    border-radius: 16px;
   }
 
   .bezel__left,

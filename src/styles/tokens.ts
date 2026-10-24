@@ -9,8 +9,10 @@
  *  - text inks ≥ 4.5:1 and graphics ≥ 3:1 against both surface and raised;
  *  - area hues validated (dataviz validate_palette.js, all-pairs, both modes):
  *    CVD ΔE 11.1, normal-vision ΔE 17.5, all ≥ 3:1 on all four surfaces.
- * The Day theme is designed, not inverted: amber and the status hues take
- * deeper steps, because the Night values fall under 3:1 on light gray.
+ * The Day theme ("Ivory") is designed, not inverted: warm ivory and stone
+ * surfaces, a piano-black navigation rail, cognac for the accent, and the
+ * instrument cluster kept black inside a chrome rim — the black dash in an
+ * ivory cabin. Status hues take deeper steps so they hold 3:1 on ivory.
  *
  * BRAND: the accent is the one strong hue. To use a brand colour, replace
  * `accent` (and its Day step, re-checked for 3:1) and nothing else.
@@ -36,6 +38,20 @@ export interface ModeTokens {
   ink3: string
   accent: string
   onAccent: string
+  /** Buttons. Night: the amber accent. Day: piano black, like the console. */
+  primary: string
+  onPrimary: string
+  /** The navigation rail. Day keeps it piano black against the ivory cabin. */
+  sidebar: string
+  sidebarRaised: string
+  sidebarInk: string
+  sidebarInk2: string
+  sidebarAccent: string
+  /** The polished rim around the instrument cluster. */
+  chrome: string
+  chromeDeep: string
+  /** Contrast stitching on the cluster housing (Day only). */
+  stitch: string
   good: string
   caution: string
   critical: string
@@ -59,6 +75,16 @@ export const night: ModeTokens = {
   ink3: '#7A7C7F',
   accent: '#F29A1F',
   onAccent: '#16181B',
+  primary: '#F29A1F',
+  onPrimary: '#16181B',
+  sidebar: '#1A1C1F',
+  sidebarRaised: '#24272B',
+  sidebarInk: '#ECEDEE',
+  sidebarInk2: '#A6A7A9',
+  sidebarAccent: '#F29A1F',
+  chrome: '#3A3F46',
+  chromeDeep: '#0F1012',
+  stitch: '#CBBFA9',
   good: '#3FA66B',
   caution: '#E0A526',
   critical: '#D6453D',
@@ -69,24 +95,37 @@ export const night: ModeTokens = {
 }
 
 export const day: ModeTokens = {
-  surface: '#E9EAEC',
-  raised: '#F4F5F6',
-  raisedAlt: '#EEEFF1',
-  dialFace: '#F0F1F2',
-  line: '#C9CCD1',
-  lineStrong: '#AEB2B8',
-  track: '#D3D6DA',
-  ink: '#16181B',
-  ink2: '#616365',
-  ink3: '#7D7F82',
-  accent: '#A85F00',
-  onAccent: '#FFFFFF',
+  // "Ivory": the cabin of a grand tourer — ivory leather, taupe seams,
+  // piano-black console, polished chrome. Warm, never pure white.
+  surface: '#EFEAE1',
+  raised: '#FBF8F3',
+  raisedAlt: '#F4EFE7',
+  dialFace: '#F6F2EC',
+  line: '#DCD3C4',
+  lineStrong: '#BFB3A0',
+  track: '#E2DACD',
+  ink: '#1C1A17',
+  ink2: '#5F5B55',
+  ink3: '#7B766F',
+  // Cognac: the amber accent deepened for ivory, like saddle leather.
+  accent: '#8C4F1C',
+  onAccent: '#FBF8F3',
+  primary: '#1C1A17',
+  onPrimary: '#FBF8F3',
+  sidebar: '#131416',
+  sidebarRaised: '#1E1F22',
+  sidebarInk: '#EDE7DC',
+  sidebarInk2: '#9A9791',
+  sidebarAccent: '#D9A066',
+  chrome: '#D8D4CC',
+  chromeDeep: '#8E8A83',
+  stitch: '#CBBFA9',
   good: '#2B7A4E',
-  caution: '#9A6B00',
-  critical: '#C23A33',
+  caution: '#946500',
+  critical: '#B8352E',
   goodInk: '#256B44',
-  cautionInk: '#8A5A00',
-  criticalInk: '#A8322C',
+  cautionInk: '#835600',
+  criticalInk: '#A3302A',
   areas: { north: '#5389C5', south: '#9A537D', caraga: '#7C802A' },
 }
 

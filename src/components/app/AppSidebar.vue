@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { navigation } from '@/config/navigation'
 import { useAuthStore } from '@/stores/auth'
+import BrandMark from './BrandMark.vue'
 
 defineProps<{ rail: boolean; temporary: boolean }>()
 const drawer = defineModel<boolean>('drawer', { required: true })
@@ -27,12 +28,12 @@ const sections = computed(() =>
     :temporary="temporary"
     :width="248"
     :rail-width="68"
-    color="surface-alt"
+    color="sidebar"
     class="sidebar"
     elevation="0"
   >
     <div class="sidebar__brand">
-      <div class="sidebar__mark">{{ appName.charAt(0) }}</div>
+      <BrandMark :size="30" />
       <span v-if="!rail" class="sidebar__name">{{ appName }}</span>
     </div>
 
@@ -61,69 +62,81 @@ const sections = computed(() =>
 </template>
 
 <style scoped>
-/* Border, not elevation — the sidebar sits in the page, it does not float. */
+/* The rail is the console: piano black in Day, graphite at Night. It separates
+   by tone, not by a shadow. */
 .sidebar {
-  border-right: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)) !important;
+  border-right: 1px solid rgb(var(--v-theme-sidebar-raised)) !important;
+  color: rgb(var(--v-theme-on-sidebar));
 }
 
 .sidebar__brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   height: 56px;
-  padding-inline: 16px;
-  border-bottom: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+  padding-inline: 18px;
+  border-bottom: 1px solid rgb(var(--v-theme-sidebar-raised));
   overflow: hidden;
 }
 
-.sidebar__mark {
-  flex: 0 0 auto;
-  width: 26px;
-  height: 26px;
-  border-radius: 6px;
-  display: grid;
-  place-items: center;
-  background-color: rgb(var(--v-theme-primary));
-  color: rgb(var(--v-theme-on-primary));
-  font-weight: 600;
-  font-size: 0.8125rem;
-}
-
+/* Tracked capitals, as on a dashboard's printed legend. */
 .sidebar__name {
+  font-family: var(--font-label);
+  font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: -0.015em;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   white-space: nowrap;
+  color: rgb(var(--v-theme-on-sidebar));
 }
 
 .sidebar__nav {
   padding-block: 12px;
 }
 
-/* Sentence case, ordinary size. A tracked-out all-caps eyebrow here is the
-   fastest way to make a dashboard look generated. */
 .sidebar__section {
-  padding: 14px 18px 6px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: rgb(var(--v-theme-text-secondary));
+  padding: 18px 20px 6px;
+  font-family: var(--font-label);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(var(--v-theme-sidebar-ink-2));
 }
 
 .sidebar__item {
   margin-bottom: 2px;
   font-size: 0.875rem;
+  color: rgb(var(--v-theme-sidebar-ink-2)) !important;
+  border-left: 2px solid transparent;
+  border-radius: 0 4px 4px 0 !important;
 }
 
 .sidebar__item :deep(.v-list-item-title) {
   font-weight: 500;
-  letter-spacing: -0.005em;
+  letter-spacing: 0.01em;
 }
 
+.sidebar__item:hover {
+  color: rgb(var(--v-theme-on-sidebar)) !important;
+}
+
+/* Active: a fine accent rule and a raised tone — never a filled pill. */
 .sidebar__item.v-list-item--active {
-  background-color: rgb(var(--v-theme-primary-soft));
-  color: rgb(var(--v-theme-primary));
+  background-color: rgb(var(--v-theme-sidebar-raised));
+  color: rgb(var(--v-theme-on-sidebar)) !important;
+  border-left-color: rgb(var(--v-theme-sidebar-accent));
 }
 
 .sidebar__item.v-list-item--active :deep(.v-icon) {
-  color: rgb(var(--v-theme-primary));
+  color: rgb(var(--v-theme-sidebar-accent));
+}
+
+.sidebar__item :deep(.v-list-item__overlay) {
+  background-color: rgb(var(--v-theme-on-sidebar));
+}
+
+.sidebar :deep(*:focus-visible) {
+  outline-color: rgb(var(--v-theme-sidebar-accent));
 }
 </style>

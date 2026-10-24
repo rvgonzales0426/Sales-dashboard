@@ -7,7 +7,7 @@
 </script>
 
 <template>
-  <div class="skeleton" aria-busy="true" aria-live="polite" data-testid="cluster-skeleton">
+  <div class="skeleton v-theme--dark" aria-busy="true" aria-live="polite" data-testid="cluster-skeleton">
     <span class="sr-only">Loading the cluster</span>
     <div class="skeleton__dials">
       <div class="skeleton__pair">
